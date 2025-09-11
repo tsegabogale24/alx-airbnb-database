@@ -7,10 +7,16 @@ FROM bookings b
 INNER JOIN users u ON b.user_id = u.id;
 
 -- 2. LEFT JOIN
-SELECT p.id AS property_id, p.name, p.location,
-       r.id AS review_id, r.rating, r.comment
+SELECT p.id AS property_id, 
+       p.name, 
+       p.location,
+       r.id AS review_id, 
+       r.rating, 
+       r.comment
 FROM properties p
-LEFT JOIN reviews r ON p.id = r.property_id;
+LEFT JOIN reviews r ON p.id = r.property_id
+ORDER BY p.name ASC, r.rating DESC;
+
 
 -- 3. FULL OUTER JOIN
 SELECT u.id AS user_id, u.name, u.email,
