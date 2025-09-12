@@ -1,5 +1,5 @@
--- Initial Complex Query: retrieves all bookings with user, property, and payment details
-
+-- Initial Complex Query: all bookings with user, property, and payment details
+EXPLAIN ANALYZE
 SELECT b.id AS booking_id,
        b.booking_date,
        u.id AS user_id,
@@ -14,10 +14,11 @@ SELECT b.id AS booking_id,
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-JOIN payments pay ON b.id = pay.booking_id;
+JOIN payments pay ON b.id = pay.booking_id
+WHERE b.booking_date >= '2024-01-01'
+  AND pay.status = 'completed';
 
--- Refactored Query: optimized by selecting only necessary columns
--- and ensuring indexed join columns (user_id, property_id, booking_id) are used
+-- Refactored Optimized Query: fewer columns, LEFT JOIN, and same filters
 EXPLAIN ANALYZE
 SELECT b.id AS booking_id,
        b.booking_date,
@@ -27,4 +28,6 @@ SELECT b.id AS booking_id,
 FROM bookings b
 JOIN users u ON b.user_id = u.id
 JOIN properties p ON b.property_id = p.id
-LEFT JOIN payments pay ON b.id = pay.booking_id;
+LEFT JOIN payments pay ON b.id = pay.booking_id
+WHERE b.booking_date >= '2024-01-01'
+  AND (pay.status = 'completed' OR pay.status IS NULL);
