@@ -15,3 +15,14 @@ CREATE INDEX idx_properties_location ON properties(location);
 
 -- Extra index for ORDER BY optimization
 CREATE INDEX idx_bookings_date_order ON bookings(booking_date DESC);
+
+-- Measure performance with EXPLAIN ANALYZE
+
+-- Query 1: Bookings by user_id
+EXPLAIN ANALYZE SELECT * FROM bookings WHERE user_id = 10;
+
+-- Query 2: Properties by location
+EXPLAIN ANALYZE SELECT * FROM properties WHERE location = 'New York';
+
+-- Query 3: Bookings ordered by booking_date
+EXPLAIN ANALYZE SELECT * FROM bookings ORDER BY booking_date DESC;
