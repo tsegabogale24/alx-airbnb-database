@@ -1,5 +1,5 @@
 -- Initial Complex Query: retrieves all bookings with user, property, and payment details
-EXPLAIN ANALYZE
+
 SELECT b.id AS booking_id,
        b.booking_date,
        u.id AS user_id,
